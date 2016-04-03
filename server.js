@@ -11,7 +11,7 @@ var mongoose   = require('mongoose');
 var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
     replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
 
-var mongodbUri = 'Write your own mongodb Uri';
+var mongodbUri = 'mongodb://appuser:123@ds011790.mlab.com:11790/expressapi';
 
 mongoose.connect(mongodbUri, options);
 var conn = mongoose.connection;
@@ -42,7 +42,11 @@ var router = express.Router();              // get an instance of the express Ro
 router.use(function(req, res, next) {
     // do logging
     console.log('Something is happening.');
-    next(); // make sure we go to the next routes and don't stop here
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header( "Access-Control-Allow-Methods" , "GET,POST,PUT,DELETE,OPTIONS");
+
+        next(); // make sure we go to the next routes and don't stop here
 });
 
 router.get('/', function(req, res) {
@@ -53,9 +57,13 @@ router.route('/bears')
 
     // create a bear (accessed at POST http://localhost:8080/api/bears)
     .post(function(req, res) {
+        debugger;
         var bear = new Bear();      // create a new instance of the Bear model
         bear.name = req.body.name;  // set the bears name (comes from the request)
-console.log(bear.name);
+        bear.surname = req.body.surname;  // set the bears name (comes from the request)
+        bear.age = req.body.age;  // set the bears name (comes from the request)
+    
+        console.log(bear);
         // save the bear and check for errors
         bear.save(function(err) {
             console.log(err);
@@ -111,18 +119,15 @@ router.route('/bears/:bear_id')
 })
     // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
     .delete(function(req, res) {
-    Bear.remove({
-        _id: req.params.bear_id
-    }, function(err, bear) {
-        if (err)
-            res.send(err);
+        Bear.remove({
+            _id: req.params.bear_id
+        }, function(err, bear) {
+            if (err)
+                res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
+            res.json({ message: 'Successfully deleted' });
+        });
     });
-});
-
-
-
 
 // more routes for our API will happen here
 

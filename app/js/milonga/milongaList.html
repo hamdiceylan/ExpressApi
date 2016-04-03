@@ -1,4 +1,11 @@
 Milonga List </br></br>
-<div ng-repeat="data in Datas">
-    {{data.name}} </br>
+<div>
+    <input type="text" ng-model="user.name" />
+    <input type="text" ng-model="user.surname" />
+    <input type="text" ng-model="user.age" />
+    <input type="button" ng-click="SaveUser()">
 </div>
+<div ng-repeat="data in Datas">
+    {{data.name}}  -  {{data.surname}} - {{data.age}} -- <button href="#" ng-click="DeleteUser(data);">X</button> </br>
+</div>
+
