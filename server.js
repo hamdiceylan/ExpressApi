@@ -6,6 +6,8 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var Bear  = require('./app/models/bear');
+var Milonga  = require('./app/models/milonga');
+
 
 var mongoose   = require('mongoose');
 var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
@@ -130,6 +132,52 @@ router.route('/bears/:bear_id')
     });
 
 // more routes for our API will happen here
+
+//Milonga Routes
+router.route('/milonga')
+    .post(function(req, res) {
+        var milonga = new Milonga();
+        milonga.Name = req.body.Name;
+        milonga.Day = req.body.Day;
+        milonga.Description = req.body.Description;
+        milonga.Address  = req.body.Address;
+        milonga.Organizer = req.body.Organizer;
+        milonga.CreateDate = req.body.CreateDate;
+        milonga.ImageUrl = req.body.ImageUrl;
+        milonga.Location = req.body.Location;
+
+        milonga.save(function(err) {
+            console.log(err);
+            if (err){
+                res.send(err);
+                console.log(err);
+            }
+            res.json({ message: 'Milonga created!' });
+        });
+
+    })
+    .get(function(req, res) {
+        Milonga.find(function(err, milongas) {
+            if (err)
+                res.send(err);
+
+            res.json(milongas);
+        });
+    });
+
+router.route('/milonga/:milonga_id')
+    .delete(function(req, res) {
+        Milonga.remove({
+            _id: req.params.milonga_id
+        }, function(err, milonga) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted' });
+        });
+    });
+
+
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api

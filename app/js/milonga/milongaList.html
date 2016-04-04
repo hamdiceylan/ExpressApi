@@ -1,11 +1,62 @@
-Milonga List </br></br>
-<div>
-    <input type="text" ng-model="user.name" />
-    <input type="text" ng-model="user.surname" />
-    <input type="text" ng-model="user.age" />
-    <input type="button" ng-click="SaveUser()">
+<br>
+<br>
+
+<div class="page-header">
+    <h1>Milongas</h1>
 </div>
-<div ng-repeat="data in Datas">
-    {{data.name}}  -  {{data.surname}} - {{data.age}} -- <button href="#" ng-click="DeleteUser(data);">X</button> </br>
+<div class="row">
+    <div class="col-xs-2">
+        <input type="text" class="form-control" placeholder="Name" ng-model="milonga.Name">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" class="form-control" placeholder="Day" ng-model="milonga.Day">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" class="form-control" placeholder="Description" ng-model="milonga.Description">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" class="form-control" placeholder="Address" ng-model="milonga.Address">
+    </div>
+    <div class="col-xs-2">
+        <input type="text" class="form-control" placeholder="Organizer" ng-model="milonga.Organizer">
+    </div>
+    <div class="col-xs-2">
+        <input type="button" class="btn btn-success" value="Save" placeholder="Address" ng-click="SaveMilonga();">
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Day</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Organizer</th>
+                <th>Create Date</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="milonga in Milongas">
+                <td><img ng-src="{{milonga.ImageUrl}}" alt="Milonga Image" height="60"></td>
+                <td>{{milonga.Name}}</td>
+                <td>{{milonga.Day}}</td>
+                <td>{{milonga.Description}}</td>
+                <td>{{milonga.Address}}</td>
+                <td>{{milonga.Organizer}}</td>
+                <td>{{milonga.CreateDate}}</td>
+                <td>{{milonga.Location}}</td>
+                <td><input type="button" class="btn btn-danger" value="Delete"  ng-click="DeleteMilonga(milonga);">
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 

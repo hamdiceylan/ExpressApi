@@ -2,12 +2,14 @@ var milongaService = angular.module('milongaService',[]);
 
 milongaService.factory('apiService',function ($http,$q) {
     var api = {};
+    //api.apiUrl = "https://expressapi.herokuapp.com/api/";
     api.apiUrl = "http://localhost:8080/api/";
+
     api.getMilongaList = function () {
         var q = $q.defer();
         $http({
             type : 'GET',
-            url : api.apiUrl + 'bears',
+            url : api.apiUrl + 'milonga',
             headers : {'Content-type' : 'application/json'}
         }).success(function (success) {
             q.resolve(success);
@@ -17,13 +19,13 @@ milongaService.factory('apiService',function ($http,$q) {
         });
         return q.promise;
     };
-    api.saveMilongaUser = function (user) {
+    api.saveMilonga = function (milonga) {
         var q = $q.defer();
         $http({
             method : 'POST',
-            url : api.apiUrl + 'bears',
+            url : api.apiUrl + 'milonga',
             headers : {'Content-type' : 'application/json'},
-            data : user
+            data : milonga
         }).success(function (success) {
             q.resolve(success);
 
@@ -32,14 +34,13 @@ milongaService.factory('apiService',function ($http,$q) {
         });
         return q.promise;
     };
-    api.deleteMilongaUser = function (userId) {
+    api.deleteMilonga = function (milongaId) {
         var q = $q.defer();
         $http({
             method : 'DELETE',
-            url : api.apiUrl + 'bears/'+userId,
+            url : api.apiUrl + 'milonga/'+milongaId,
             headers : {'Content-type' : 'application/json'}
         }).success(function (success) {
-            console.log(success);
             q.resolve(success);
 
         }).error(function (error) {
