@@ -6,7 +6,7 @@
 </head>
 <body ng-app="milongaApp">
 <!-- Fixed navbar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="MainCtrl">
     <div class="container" >
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -19,12 +19,22 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#/home">Home</a></li>
-                <li><a href="#list">Milonga</a></li>
+                <li><a href="#/home" ng-if="login">Home</a></li>
+                <li><a href="#list" ng-if="login">Milonga</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"  ng-if="login">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Hamdi Ceylan <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="Logout();">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+
+
 
 <div class="container theme-showcase" role="main" ng-view>
 

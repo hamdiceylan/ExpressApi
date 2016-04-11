@@ -1,7 +1,10 @@
 var loginService = angular.module('loginService',[]);
 
-loginService.factory('loginService',function ($http,$q) {
+loginService.factory('loginService',function ($http,$q,$rootScope) {
     var api = {};
+
+    $rootScope.token = {};
+    $rootScope.login = false;
     //api.apiUrl = "https://expressapi.herokuapp.com/api/";
     api.apiUrl = "http://localhost:8080/api/";
 
@@ -16,6 +19,8 @@ loginService.factory('loginService',function ($http,$q) {
             q.resolve(success);
 
         }).error(function (error) {
+            $rootScope.token = {};
+            $rootScope.login = false;
             q.reject(error);
         });
         return q.promise;

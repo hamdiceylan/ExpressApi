@@ -41,8 +41,6 @@ var port = process.env.PORT || 8080;        // set our port
 app.set('superSecret', config.secret); // secret variable
 
 
-
-
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -65,6 +63,7 @@ router.post('/authenticate', function(req, res) {
     User.findOne({
         name: req.body.name
     }, function(err, user) {
+        console.log(user);
 
         if (err) throw err;
 
@@ -90,50 +89,16 @@ router.post('/authenticate', function(req, res) {
                     token: token
                 });
             }
-
         }
-
     });
-});
-
-// route middleware to verify a token
-router.use(function(req, res, next) {
-
-    // check header or url parameters or post parameters for token
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-    // decode token
-    if (token) {
-
-        // verifies secret and checks exp
-        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-            if (err) {
-                return res.json({ success: false, message: 'Failed to authenticate token.' });
-            } else {
-                // if everything is good, save to request for use in other routes
-                req.decoded = decoded;
-                next();
-            }
-        });
-
-    } else {
-
-        // if there is no token
-        // return an error
-        //return res.status(403).send({
-        //    success: false,
-        //    message: 'No token provided.'
-        //});
-
-    }
 });
 
 app.get('/setup', function(req, res) {
 
     // create a sample user
     var nick = new User({
-        name: 'Nick Cerminara',
-        password: 'password',
+        name: 'hamdi',
+        password: '123',
         admin: true
     });
 
@@ -145,7 +110,6 @@ app.get('/setup', function(req, res) {
         res.json({ success: true });
     });
 });
-
 
 // route to return all users (GET http://localhost:8080/api/users)
 router.get('/users', function(req, res) {
@@ -285,6 +249,7 @@ router.route('/milonga/:milonga_id')
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
+
 
 // START THE SERVER
 // =============================================================================
